@@ -1,0 +1,128 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+        .student-list
+        {
+            margin:10px auto;
+        }
+
+        th
+        {
+            background: black;
+            color: white;
+        }
+        p
+        {
+            margin:0px;
+        }
+		tr:hover{
+		color:black !important
+		}
+		nav-item:hover{
+		cursoe:pointer;
+		}
+
+
+
+
+    </style>
+
+    <script>
+        function show(i,ta)
+        {
+            document.getElementById('import').style.display=i;
+            document.getElementById('enroll').style.display=ta;
+
+            if(i=='block')
+            {
+                document.getElementById('import-link').classList.add('active');
+                document.getElementById('ta-link').classList.remove('active');
+                console.log("Import Active");
+            }
+            else
+            {
+                document.getElementById('import-link').classList.remove('active');
+                document.getElementById('ta-link').classList.add('active');
+                console.log("TA Active");
+            }
+
+        }
+
+
+
+
+    </script>
+</head>
+<body>
+<div th:insert="header"></div>
+<h1 align="center" th:text="${courseId}" style="margin-top:50px;"></h1>
+
+<div class="container col-sm-6">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <p class="nav-link active" onclick="show('block','none');" id="import-link"> Import Students </p>
+        </li>
+        <li class="nav-item">
+            <p class="nav-link" onclick="show('none','block');" id="ta-link"> Enroll TA </p>
+        </li>
+    </ul>
+
+    <div id="import">
+        <div class="container student-list col-sm-6">
+            <h3 align="center">Import Students</h3>
+            <br>
+            <form class="form" method="post" th:action="@{/manageCourse}" enctype="multipart/form-data">
+
+                <input type="file" class="form-control" name="student-list-csv">
+                <br>
+                <input type="text" hidden name="courseId" th:value="${courseId}">
+                <button class="btn btn-primary form-control" type="submit">Submit</button>
+
+            </form>
+            <div th:if="${message}">
+                <h6 th:text="${message}"/>
+            </div>
+        </div>
+
+        <div class="container col-sm-10">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Banner Id</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="student: ${studentList}">
+                    <td><p th:text="${student.getBannerId()}"></p></td>
+                    <td><p th:text="${student.getFirstName()}"></p></td>
+                    <td><p th:text="${student.getLastName()}"></p></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="enroll" style="display: none;">
+
+        <h1 align="center">TA enrollment</h1>
+        <center>
+            <form th:action="@{/taEnrollment/{courseId}(courseId=${courseId})}" method="post">
+                <label>Enter the Banner Id of the user:</label><br/>
+
+                <input type="text" id="bannerId" name="bannerId" class="form-control" th:value=${bannerId}>
+                <br>
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+        </center>
+    </div>
+</div>
+
+</body>
+</html>

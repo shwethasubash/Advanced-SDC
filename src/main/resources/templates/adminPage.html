@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+.aTry{
+text-decoration: underline;
+color:blue;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+<div th:insert="header"></div>
+<div align="center">
+    <h1>Admin Dashboard</h1><br/><br/>
+
+    <a href="/admin/addCourse" class="aTry">Add New Course</a><br/><br/>
+
+    <form th:action="@{/admin/deleteCourse}" method="post">
+        <select id="course" name="course">
+            <option value="">Choose Course to delete</option>
+            <option th:each="course : ${courses}"
+                    th:value="${course.courseId}"
+                    th:text="${course.courseName}"></option>
+
+        </select>
+        <button type="submit">Delete Course</button>
+        <br/><br/>
+    </form>
+
+    <form th:action="@{/admin/addInstructor}" method="post">
+        <select id="course" name="course">
+            <option value="">Choose Course</option>
+            <option th:each="course : ${courses}"
+                    th:value="${course.courseId}"
+                    th:text="${course.courseName}"></option>
+        </select>
+
+
+        <select id="user" name="user">
+            <option value="">Choose User</option>
+            <option th:each="user : ${users}"
+                    th:value="${user.bannerId}"
+                    th:text="${user.firstName}"></option>
+        </select>
+
+
+        <button type="submit">Add Course Instructor</button>
+    </form>
+
+</div>
+</body>
+</html>

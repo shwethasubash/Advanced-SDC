@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Options</title>
+
+    <style>
+.moreOptionsClass{
+	color:blue !important;
+	text-decoration:underline;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+<div th:insert="header"></div>
+<br><br><br>
+<div align="center">
+    <form th:action="@{/questions/addQuestion}" th:object="${question}" method="post">
+        <table>
+            <tbody>
+
+            <tr th:each="option, itemStat : *{optionWithOrder}">
+                <td>
+                    <label>Display Text:</label><input th:field="*{optionWithOrder[__${itemStat.index}__].displayText}"
+                                                       value="${option.displayText}"/></td>
+
+                <td>
+                    <label>Stored As:</label><input th:field="*{optionWithOrder[__${itemStat.index}__].storedAs}"
+                                                    value="${option.storedAs}"/></td>
+
+            </tr>
+
+            </tbody>
+        </table>
+        <div style="margin-top:30px">
+
+        </div>
+        <div style="margin-top:30px">
+            <button name="action" value="addOption">Add option</button>
+            <button name="action" value="create">Create Question</button>
+        </div>
+        <input type="hidden" th:field="*{questionText}" value="${questionText}">
+        <input type="hidden" th:field="*{questionType}" value="${questionType}">
+        <input type="hidden" th:field="*{questionTitle}" value="${questionTitle}">
+    </form>
+
+</div>
+</body>
+</html>

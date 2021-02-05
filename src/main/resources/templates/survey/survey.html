@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey</title>
+    <style>
+        .question-box
+        {
+            margin-bottom: 20px;
+            padding: 5px;
+            border: 1px solid black;
+        }
+
+        p
+        {
+            width: max-content;
+            margin-bottom: 0;
+        }
+        .full-stop
+        {
+            margin-right: 5px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div th:insert="header"></div>
+<h1 align="center" th:text="${courseId}"></h1>
+<h1 align="center" th:if="${surveyPublished}==false">No Survey Available</h1>
+<h1 align="center" th:if="${surveyPublished and attempted}">Survey Attempted</h1>
+<h1 align="center" th:if="${message}!=null" th:text="${message}"></h1>
+
+<div th:if="${surveyPublished and attempted==false and message==null}">
+    <form method="post" th:action="@{/saveResponse}" th:object="${response}" th:if="${surveyPublished}">
+        <input hidden th:field="*{surveyId}" th:value="${response.surveyId}">
+        <input hidden th:field="*{courseId}" th:value="${response.courseId}">
+
+        <div class="container question-box" th:each="question, i: *{questionList}">
+            <input hidden th:field="*{questionList[__${i.index}__].question.questionType}"
+                   th:value="${question.question.questionType}">
+            <input hidden th:field="*{questionList[__${i.index}__].question.questionId}"
+                   th:value="${question.question.questionId}">
+
+            <div style="display: flex; flex-direction: row;">
+                <p th:text="${i.index+1}"></p>
+                <p class="full-stop">. </p>
+                <p th:text="${question.question.questionText}"></p>
+            </div>
+            <div th:if="${question.question.questionType}=='Numeric'">
+                <input type="number"
+                       th:field="*{questionList[__${i.index}__].answer}"
+                       required
+                >
+            </div>
+
+            <div th:if="${question.question.questionType}=='CheckBox'">
+                <div th:each="option: ${question.question.optionWithOrder}">
+                    <input type="checkbox"
+                           th:value="${option.displayText}"
+                           th:text="${option.displayText}"
+                           th:name="${option.storedAs}"
+                           th:field="*{questionList[__${i.index}__].answer}"
+                    >
+                </div>
+            </div>
+
+            <div th:if="${question.question.questionType}=='RadioButton'">
+                <div th:each="option: ${question.question.optionWithOrder}">
+                    <input type="radio"
+                           th:value="${option.displayText}"
+                           th:text="${option.displayText}"
+                           th:field="*{questionList[__${i.index}__].answer}"
+                           required
+                    >
+                </div>
+            </div>
+
+            <div th:if="${question.question.questionType}=='FreeText'">
+                    <textarea
+                            th:field="*{questionList[__${i.index}__].answer}"
+                            required
+                    />
+            </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-success" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

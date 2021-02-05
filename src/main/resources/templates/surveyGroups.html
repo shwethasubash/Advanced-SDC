@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+    <style>
+        tr:hover{
+		color:black !important
+		}
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div th:insert="header"/>
+<div class="container">
+    <h2 align="center">Groups</h2>
+    <div th:if="!${message}" class="container">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Group No</th>
+                <th>Banner Id</th>
+                <th>Show Response</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div th:each="group,i: ${groups}">
+                <td th:rowspan="${#lists.size(group)+1}" th:text="${i.index+1}"></td>
+                <tr th:each="student: ${group}">
+                    <td th:text="${student.bannerId}"></td>
+                    <td>
+                        <button class="btn btn-primary">Responses</button>
+                    </td>
+                </tr>
+            </div>
+            </td>
+            </tbody>
+        </table>
+    </div>
+    <h4 th:if="${message}" th:text="${message}" align="center"></h4>
+</div>
+</body>
+</html>

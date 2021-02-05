@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+.aTry{
+text-decoration: underline;
+color:blue;
+}
+tr:hover{
+color:black !important;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+<div th:insert="header"></div>
+<div align='center'>
+
+    <h1>Add Course</h1><br/>
+    <form th:action="@{/admin/addCourseToDatabase}" th:object="${course}" method="post">
+        <table cellpadding="10">
+            <tr>
+                <td><label class="course">Course ID</label></td>
+                <td><input type="text" th:field="*{courseId}" required/></td>
+            </tr>
+            <tr>
+                <td><label class="course">Course Name</label></td>
+                <td><input type="text" th:field="*{courseName}" required/></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <button type="submit">Add Course</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

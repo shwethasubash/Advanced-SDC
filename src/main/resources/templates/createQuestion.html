@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>create question</title>
+</head>
+<body>
+<div th:insert="header"></div>
+<div align='center'>
+
+    <h1>Create Question</h1><br/>
+    <form th:action="@{/questions/questionType}" th:object="${question}" method="post">
+        <table cellpadding="10">
+            <tr>
+                <td><label class="questionTitle">Question Title</label></td>
+                <td><input type="text" th:field="*{questionTitle}" required/></td>
+            </tr>
+            <tr>
+                <td><label class="question">Question</label></td>
+                <td><input type="text" th:field="*{questionText}" required/></td>
+            </tr>
+
+
+            <tr>
+                <td><label>Question Type</label></td>
+                <td><select id="questionType" name="questionType" onChange="changetextbox()" required>
+                    <option value="">Choose Question Type</option>
+                    <option th:each="questionType : ${questionTypes}"
+                            th:value="${questionType}"
+                            th:text="${questionType}"></option>
+                </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="createQuestion" name="createQuestion" type="submit">Create Question</button>
+                </td>
+                <td>
+                    <button id="next" name="next" type="submit">Next Page</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+function changetextbox()
+{
+	
+	console.log("here");
+
+    if (document.getElementById("questionType").value === "Free text" || 
+    		document.getElementById("questionType").value === "Numeric") {
+        document.getElementById("createQuestion").disabled=false;
+        document.getElementById("next").disabled=true;
+    } else {
+        document.getElementById("createQuestion").disabled=true;
+        document.getElementById("next").disabled=false;
+    }
+}
+
+
+
+
+</script>
+
+</body>
+</html>

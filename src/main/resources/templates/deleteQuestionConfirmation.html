@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+.aTry{
+text-decoration: underline;
+color:blue;
+}
+tr:hover{
+color:black !important;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+<div th:insert="header"></div>
+<div align='center'>
+
+    <h1>Delete Question Confirmation</h1><br/>
+    <p>Are you sure you want to delete this question? The changes can not be reverted.
+    <form th:action="@{'/questions/deleteQuestion/'}+ ${questionId}" method="post">
+        <button class="btn btn-danger" type="submit">Yes</button>
+        <br/>
+    </form>
+    <a th:href="@{/questions/}">
+        <button class="btn  btn-primary"> No</button>
+    </a>
+
+
+</div>
+</body>
+</html>

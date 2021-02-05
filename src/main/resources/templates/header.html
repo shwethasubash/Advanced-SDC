@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+ .navigation {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.navigation li {
+  float: left;
+}
+
+.navigation li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: white;
+  color:black
+}
+.active {
+  background-color: #4CAF50;
+}
+.navigation {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.navigation li a:hover {
+  background-color: white;
+  color:black
+}
+.navgiation .active {
+  background-color: #4CAF50;
+}
+
+.table-course{
+width:70%;
+align:center;
+}
+.textCenter{
+text-align:center;
+
+}
+.rowHover:hover{
+background-color:#bbb8b88c;
+font-weight:bold;
+color:black;
+}
+tr:hover{
+color:white
+}
+p{
+font-size:20px;
+}
+.Card {
+  width: 450px;
+  padding: 20px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18);
+  margin: auto;
+  display: inline-block;
+  margin: 10px;
+}
+a{
+color:black;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+<div>
+    <ul class="navigation">
+        <li sec:authorize="hasAuthority('ROLE_STUDENT') or hasAuthority('ROLE_TA') or hasAuthority('ROLE_GUEST') or hasAuthority('ROLE_INSTRUCTOR')">
+            <a href="/access"><b>Home</b></a></li>
+        <!-- <li sec:authorize="hasAuthority('ROLE_INSTRUCTOR')"><a href="tutor"><b>Tutor</b></a></li> -->
+        <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a href="dashboard"><b>Manage</b></a></li>
+        <li style="float:right"><a href="/logout"><b>Logout</b></a></li>
+    </ul>
+</div>
+
+</body>
+</html>

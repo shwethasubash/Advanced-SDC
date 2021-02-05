@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+</head>
+<body>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th>Group Number</th>
+        <th>Banner Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="group : ${groups}">
+        <td th:text="${group.groupNumber}"></td>
+        <td th:text="${group.bannerId}"></td>
+        <td th:text="${group.firstName}"></td>
+        <td th:text="${group.lastName}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

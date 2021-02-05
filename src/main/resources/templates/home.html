@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+
+    <style>
+table{
+text-align: center;
+}
+
+
+
+
+    </style>
+    <script>
+
+    </script>
+</head>
+<body>
+<div th:insert="header"></div>
+<div align="center">
+    <br>
+    <h2>Hello...Markers !!</h2>
+    <h1>Group 16</h1>
+    <br>
+    <table class="table">
+        <tbody>
+
+        <tr sec:authorize="hasAuthority('ROLE_STUDENT')  or hasAuthority('ROLE_TA') or hasAuthority('ROLE_INSTRUCTOR')"
+            th:each="message : ${listOfCourses}" class="rowHover Card">
+            <td><a th:href="@{/courseDisplay(courseId=${message.courseId})}" class="textCenter"><p
+                    th:text="${message.courseId}"/></a></td>
+            <td><a th:href="@{/courseDisplay(courseId=${message.courseId})}" class="textCenter"><p
+                    th:text="${message.courseName}"/></a></td>
+        </tr>
+        <tr sec:authorize="hasAuthority('ROLE_GUEST') and !hasAuthority('ROLE_STUDENT') and !hasAuthority('ROLE_TA') and !hasAuthority('ROLE_INSTRUCTOR')"
+            th:each="message : ${listOfCourses}" class="rowHover Card">
+            <td><a class="textCenter"><p th:text="${message.courseId}"/></a></td>
+            <td><a class="textCenter"><p th:text="${message.courseName}"/></a></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

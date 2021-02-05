@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+.buttonPrim{
+	 color: white !important;
+    background-color: #333 !important;
+    border-color: white;
+}
+.buttonPrim:hover {
+    color: white;
+    background-color:#333;
+    border-color: white;
+    
+}
+button>a{
+color:white;
+}
+button>a:hover{
+color:white;
+font-weight:bold;
+text-decoration:none;
+}
+
+
+
+
+
+    </style>
+    <script>
+
+    </script>
+</head>
+<body>
+<!--<form th:action="@{/instructor/manageCourse(courseId=${course.courseId})}">-->
+<div th:insert="header"></div>
+<div align="center">
+    <h1 align="center">Course</h1>
+    <h2 th:text="${course.courseId}"></h2>
+    <h3 th:text="${course.courseName}"></h3>
+    <th:block th:if="${isInstructor}">
+        <button class="btn btn-lg buttonPrim"><a th:href="@{/manageCourse(courseId=${course.courseId})}">Manage as
+            Instructor</a></button>
+        <br><br>
+        <button class="btn btn-lg buttonPrim"><a th:href="@{/questions}">Manage Questions</a></button>
+        <button class="btn btn-lg buttonPrim"><a th:href="@{/createSurvey(courseId=${course.courseId})}">Create
+            Survey</a></button>
+    </th:block>
+    <th:block th:if="${isTa}">
+        <button class="btn btn-lg buttonPrim"><a th:href="@{/manageCourse(courseId=${course.courseId})}">Manage as
+            TA</a></button>
+        <button class="btn btn-lg buttonPrim"><a th:href="@{/questions}">Manage Questions</a></button>
+        <button class="btn btn-lg buttonPrim"><a th:href="@{/createSurvey(courseId=${course.courseId})}">Create
+            Survey</a></button>
+    </th:block>
+    <th:block th:if="${isStudent}">
+        <button class="btn btn-lg buttonPrim"><a th:href="@{/viewSurvey(courseId=${course.courseId})}">Survey</a>
+        </button>
+    </th:block>
+</div>
+<!--</form>-->
+
+</body>
+</html>

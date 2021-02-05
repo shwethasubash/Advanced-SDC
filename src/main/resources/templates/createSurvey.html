@@ -1,0 +1,165 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+.RuleValue{
+float: right;
+}
+.A{
+  font: 19px Arial;
+  text-decoration: none;
+  background-color: #ff6961;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  border-radius: 5px;
+
+}
+
+
+
+    </style>
+    <script>
+function deleteAlert()
+{
+	if (confirm('Do you want to delete?'))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+		
+}
+
+
+
+    </script>
+
+</head>
+<body>
+<div th:insert="header"></div>
+<h1 align="center">Survey</h1>
+<div align="center">
+
+<span th:if="${isPublished== false}">
+<form th:action="@{/survey/add}" method="post" model="question">
+<input type="hidden" th:field=${survey.surveyId}>
+<input type="hidden" th:field=${course.courseId}>
+        <select id="question" name="questionId" required>
+                    <option value="">Choose Question Type</option>
+                    <option th:each="question : ${questionBank}"
+                            th:value="${question.questionId}"
+                            th:text="${question.questionText}"></option>
+		</select>
+        <button type="submit" class="btn btn-dark">Add Question</button>
+        <br/><br/>
+</form>
+</span>
+    <div class="container">
+        <form th:action="@{survey/saveAndPublish}" th:object="${survey}" method="post">
+            <input type="hidden" th:field=${course.courseId}>
+            <input type="hidden" th:field=*{surveyId} value="${surveyId}">
+            <span th:if="${isPublished== false}">
+<label>Group Size</label>
+<input type="text" th:field=*{groupSize} value=${survey.groupSize}>   
+</span>
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Question</th>
+                    <th scope="col">Rule</th>
+                    <th scope="col">Priority</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <tr th:each="option, itemStat : *{surveyQuestions}">
+                    <td>
+                        <input type="hidden" th:field="*{surveyQuestions[__${itemStat.index}__].question.questionText}"
+                               value="${option.question.questionText}" th:text="${option.question.questionText}"/>
+                        <input type="hidden" th:field="*{surveyQuestions[__${itemStat.index}__].question.questionId}"
+                               value="${option.question.questionId}"/>
+                        <input type="hidden" th:field="*{surveyQuestions[__${itemStat.index}__].question.questionType}"
+                               value="${option.question.questionType}"/>
+                    </td>
+                    <td th:switch="${option.question.questionType}">
+                        <input type="hidden" th:field="*{surveyQuestions[__${itemStat.index}__].rule.ruleId}"
+                               value="${option.rule.ruleId}"/>
+                        <span th:case="'Numeric'">
+										    <select th:field="*{surveyQuestions[__${itemStat.index}__].rule.ruleType}"
+                                                    th:value="${option.rule.ruleType}" required>
+											    <option value="Similar">Group Similar</option>
+												<option value="Dissimilar">Group Dissimilar</option>   
+												<option value="Greater than">At least one greater than X</option>
+												<option value="less than">At least one less than X</option>          
+										    </select> 
+										    <div class="RuleValue">
+										     <label>Value</label>
+										     <input th:field="*{surveyQuestions[__${itemStat.index}__].rule.ruleValue}"
+                                                    value="${option.rule.ruleValue}"/>
+										    </div>
+								    </span>
+                        <span th:case="'FreeText'">
+											<select th:field="*{surveyQuestions[__${itemStat.index}__].rule.ruleType}"
+                                                    th:value="${option.rule.ruleType}" required>
+												  <option value="Similar">Group Similar</option>
+												  <option value="Dissimilar">Group Dissimilar</option> 
+											</select>   
+											 <div class="RuleValue">
+										     <label>Value</label>
+										     <input th:field="*{surveyQuestions[__${itemStat.index}__].rule.ruleValue}"
+                                                    value="${option.rule.ruleValue}"/>
+										    </div>
+								    </span>
+                        <span th:case="*">
+											    <select th:field="*{surveyQuestions[__${itemStat.index}__].rule.ruleType}"
+                                                        th:value="${option.rule.ruleType}" required>
+													<option value="Similar">Group Similar</option>
+													<option value="Dissimilar">Group Dissimilar</option>        
+											    </select> 
+								    </span>
+                    </td>
+                    <td>
+                        <select th:field="*{surveyQuestions[__${itemStat.index}__].priority}"
+                                th:value="${option.priority}" required>
+                            <option value=1>1</option>
+                            <option value=2>2</option>
+                            <option value=3>3</option>
+                            <option value=4>4</option>
+                            <option value=5>5</option>
+                            <option value=6>6</option>
+                            <option value=7>8</option>
+                            <option value=9>9</option>
+                            <option value=10>10</option>
+                        </select>
+                    </td>
+                    <td>
+				<span th:if="${isPublished == false}">
+				<a th:href="@{'/survey/'+${survey.surveyId}+'/deleteQuestion/'+${option.question.questionId}+'/course/'+${course.courseId}}"
+                   onClick="deleteAlert()" class="btn btn-danger">Delete</a>
+				</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br><br>
+            <span th:if="${isPublished== false}">
+<button type="submit" class="btn btn-dark" name="action" value="Save">Save</button>
+<button type="submit" class="btn btn-dark" name="action" value="Publish">Publish</button>
+</span>
+            <span th:if="${isPublished== true}">
+
+<a th:href="@{'/surveyGroups/'+${survey.surveyId}}" class="btn btn-dark" name="action">Generate Groups</a>
+</span>
+        </form>
+    </div>
+</div>
+</body>
+</html>

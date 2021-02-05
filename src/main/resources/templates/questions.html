@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Question Manager</title>
+    <style>
+        tr:hover{
+		color:black !important
+		}
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div th:insert="header"/>
+<div class="container">
+    <h2 align="center">List of Questions</h2>
+    <div th:if="!${message}" class="container">
+        <div class="form-group">
+            <form method="get" th:action="@{/questions/sort}">
+                <label for="sort">Sort By:</label>
+                <select class="" id="sort" name="with" onchange="this.form.submit()">
+                    <option>Title</option>
+                    <th:block th:if="${sortBy}==Date">
+                        <option selected>Date</option>
+                    </th:block>
+                    <th:block th:if="${sortBy}!=Date">
+                        <option>Date</option>
+                    </th:block>
+                </select>
+            </form>
+            <form method="get" th:action="@{/questions/createQuestion}">
+                <button>Create Question</button>
+            </form>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Title</th>
+                <th>Question</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="question: ${questions}">
+                <td th:text="${question.questionTitle}"></td>
+                <td th:text="${question.questionText}"></td>
+                <td th:text="*{#calendars.format(question.createdDate,'dd MMM yyyy')}"></td>
+                <td>
+                    <form th:action="@{/questions/deleteQuestionConfirmation/} + ${question.questionId}"
+                          th:method="get">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h4 th:if="${questions.empty}">No Questions Created</h4>
+    </div>
+    <h4 th:if="${message}" th:text="${message}" align="center"></h4>
+</div>
+</body>
+</html>

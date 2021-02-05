@@ -1,0 +1,36 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CatmeSpringProjectApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+    <envs>
+      <env name="DB_PASSWORD" value="CSCI5308_16_DEVINT_16175" />
+      <env name="DB_URL" value="jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_16_DEVINT?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
+      <env name="DB_USERNAME" value="CSCI5308_16_DEVINT_USER" />
+      <env name="MAXIMUM_LENGTH" value="10" />
+      <env name="MAXIMUM_LENGTH_ENABLE" value="false" />
+      <env name="MINIMUM_LENGTH" value="5" />
+      <env name="MINIMUM_LENGTH_ENABLE" value="false" />
+      <env name="MINIMUM_LOWER_CASE_ENABLE" value="false" />
+      <env name="MINIMUM_LOWER_CASE_LENGTH" value="3" />
+      <env name="MINIMUM_LOWER_CASE_REGEX" value="(.*[a-z])" />
+      <env name="MINIMUM_SYMBOL_SPECIAL_ENABLE" value="false" />
+      <env name="MINIMUM_SYMBOL_SPECIAL_LENGTH" value="3" />
+      <env name="MINIMUM_SYMBOL_SPECIAL_REGEX" value="(.*[$&amp;+,:;=\\?@#|'&lt;&gt;.^*()%/])" />
+      <env name="MINIMUM_UPPER_CASE_ENABLE" value="false" />
+      <env name="MINIMUM_UPPER_CASE_LENGTH" value="3" />
+      <env name="MINIMUM_UPPER_CASE_REGEX" value="(.*[A-Z])" />
+      <env name="NOT_ALLOWED_CHARACTER_ENABLE" value="false" />
+      <env name="NOT_ALLOWED_CHARACTER_REGEX" value="[xyz]" />
+      <env name="PASSWORD_HISTORY_ENABLE" value="false" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="dal.asd.catme.CatmeSpringProjectApplication" />
+    <module name="catme" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="dal.asd.catme.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
